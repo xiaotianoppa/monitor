@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+   Zirco Browser for Android
+  
+   Copyright (C) 2010 - 2011 J. Devauchelle and contributors.
+ 
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License
+   version 3 as published by the Free Software Foundation.
+ 
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+-->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppBaseTheme" parent="android:Theme.Light"></style>
+
+    <style name="AppTheme" parent="AppBaseTheme"></style>
+
+    <style name="Bookmarks"></style>
+
+    <!-- Application theme. -->
+
+    <style name="Bookmarks.Title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="History"></style>
+
+    <style name="History.Title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="History.Url">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#888888</item>
+    </style>
+    
+    <style name="submitBtn" parent="@android:style/TextAppearance">  
+       <item name="android:textColor">#fff</item>  
+        <item name="android:textSize">16sp</item>  
+        <item name="android:background">#4090ff</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:gravity">center</item>
+</style>  
+
+        <style name="operationBtn" parent="@android:style/TextAppearance">  
+       <item name="android:textColor">#fff</item>  
+        <item name="android:textSize">20sp</item>  
+        <item name="android:background">#4090ff</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center</item>
+</style> 
+
+<style name="Theme.AppStartLoad" parent="android:Theme">  
+    <item name="android:windowBackground">@drawable/open_bg</item>  
+    <item name="android:windowNoTitle">true</item>  
+</style>
+        
+
+</resources>
