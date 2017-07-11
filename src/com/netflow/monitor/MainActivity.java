@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 
-		initRootRight();
+//		initRootRight();
 		initCheckServiceState();
 		initNetflowServiceState();
 		initEnvent();

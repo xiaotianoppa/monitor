@@ -23,9 +23,9 @@ public class CheckMissionRunService extends Service {
 	private ServiceHandler mServiceHandler;
 
 	public static final String TAG = "checkNetflowMissionRun";
-	private static final String REBOOT_MOBILE_ACT = "reboot.mobile.service.action";
+	private static final String RESTART_MOBILE_ACT = "restart.mobile.service.action";
 	private static final String STOP_SERVICE_ACT = "stop.netflow.service.action";
-	public static final String autoRunnerPath = "/data/data/jp.jun_nama.test.utf7ime/tools/AutoRunner.jar";
+//	public static final String autoRunnerPath = "/data/data/jp.jun_nama.test.utf7ime/tools/AutoRunner.jar";
 	private static boolean isFinished = false;
 
 	private MyBinder myBinder = new MyBinder();
@@ -99,7 +99,7 @@ public class CheckMissionRunService extends Service {
 
 	}
 
-	public static final long maxWaitTime = 20 * 60 *1000;//20分钟
+	public static final long maxWaitTime = 40 * 60 *1000;//20分钟
 	public void checkMissionStatus() {
 
 		new Thread(new Runnable() {
@@ -124,7 +124,7 @@ public class CheckMissionRunService extends Service {
 					
 					long prevRunTs = 0;
 					String runTime =  IoUtils.readContent(IoUtils.prevRunTs);
-//					Log.i(TAG, "read prev runTs:"+runTime);
+					Log.i(TAG, "read prev runTs:"+runTime);
 					if( !StringUtils.isEmpty(runTime) && StringUtils.isNumeric(runTime)){
 
 						 prevRunTs = Long.parseLong(runTime);
@@ -132,7 +132,7 @@ public class CheckMissionRunService extends Service {
 					}
 
 					if( prevRunTs > 0){
-//						Log.i(TAG, "read prev run time:"+DSUtils.getCurFormatTime(prevRunTs));
+						Log.i(TAG, "read prev run time:"+DSUtils.getCurFormatTime(prevRunTs));
 						if(System.currentTimeMillis() - prevRunTs > maxWaitTime){
 							msg.what = 2;
 							Log.i(TAG, "不正常停止!");
@@ -169,12 +169,11 @@ public class CheckMissionRunService extends Service {
 					mContext.sendBroadcast(stopIntent);
 					DSUtils.sleep5s();
 					
-					Log.i(TAG, "netflow mission service has innormal stop!!! send action to reboot !");
-//					Intent intent = new Intent(REBOOT_MOBILE_ACT);
-//					mContext.sendBroadcast(intent);
+					Log.i(TAG, "netflow mission service has innormal stop!!! send action to restart !");
+					Intent intent = new Intent(RESTART_MOBILE_ACT);
+					mContext.sendBroadcast(intent);
 					
-					doRebootMobile();
-					
+				
 					DSUtils.sleep60s();
 					if (isFinished == true) {
 						return;
@@ -208,42 +207,6 @@ public class CheckMissionRunService extends Service {
 		}).start();
 		super.onDestroy();
 	}
-	
-	   public void doRebootMobile() {
-
-	        new Thread(new Runnable() {
-	            @Override
-	            public void run() {
-
-	                CmdUtil.execRestart();
-	                
-	                DSUtils.sleep3s();
-	                killPreAutomator();
-	                for(int i=0; i< 5;i++){
-	                	 String cmdText = " uiautomator runtest " + autoRunnerPath
-	                			 + "  -c dowork.RebootRunner ";
-	                     CmdUtil.execNetFlowCmd(cmdText);
-	                     DSUtils.sleep5s();
-	                }
-
-	            }
-	        }).start();
-
-	    }
-	   
-	   private void killPreAutomator() {
-	        //  String psCmd = CmdUtil.execPsGrep("uiautomator");
-	        String psCmd = CmdUtil.execNetFlowCmd("ps uiautomator");
-	        if (StringUtils.isEmpty(psCmd) == false) {
-	            String[] ps = psCmd.split("\\s+");
-	            if (ps.length > 10) {
-	                //	psCmd = psCmd.trim().replace("%0A", "");
-	                String pid = ps[9].trim();
-	                Log.i(TAG, "utf7ime kill pid:" + pid);
-	                CmdUtil.execNetFlowCmd(" kill " + pid);
-	            }
-	        }
-	    }
 
 
 }
